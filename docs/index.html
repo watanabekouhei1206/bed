@@ -48,7 +48,7 @@
           scene.add(axisHelper);
   
           const geometry1 = new THREE.BoxGeometry( 2, 0.1, 1);
-          const material1 = new THREE.MeshToonMaterial( {color: 0xC27526} );
+          const material1 = new THREE.MeshLambertMaterial( {color: 0xC27526} );
           const cube = new THREE.Mesh( geometry1, material1 );
           cube.position.y += 0.25;
           scene.add( cube );
@@ -94,7 +94,7 @@
           scene.add( frame2 );
   
           const geometry8 = new THREE.BoxGeometry( 1.9, 0.08, 0.8);
-          const material2 = new THREE.MeshToonMaterial( {color: 0x6A3300} );
+          const material2 = new THREE.MeshLambertMaterial( {color: 0x6A3300} );
           const mat = new THREE.Mesh( geometry8, material2 );
           mat.position.y += 0.325;
           scene.add( mat);
