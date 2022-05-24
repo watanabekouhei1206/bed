@@ -93,11 +93,18 @@
           frame2.position.y += 0.4;
           scene.add( frame2 );
   
-          const geometry8 = new THREE.BoxGeometry( 1.9, 0.08, 0.8);
+          const geometry8 = new THREE.BoxGeometry( 1.9, 0.3, 0.8);
           const material2 = new THREE.MeshLambertMaterial( {color: 0x6A3300} );
           const mat = new THREE.Mesh( geometry8, material2 );
           mat.position.y += 0.325;
           scene.add( mat);
+
+          const geometry9 = new THREE.BoxGeometry( 0.2, 0.2, 0.4);
+          const material3 = new THREE.MeshLambertMaterial( {color: 0xFFFFFF} );
+          const pillow = new THREE.Mesh( geometry9, material3 );
+          pillow.position.x += 0.75;
+          pillow.position.y += 0.475;
+          scene.add(pillow)
   
           const bed = new THREE.Group();
             bed.add(cube);
@@ -108,7 +115,8 @@
             bed.add(frame1);
             bed.add(frame2);
             bed.add(mat);
-            bed.position.set(0,1,0);
+            bed.add(pillow);
+            bed.position.set(0,0.05,0);
             scene.add(bed);
   
           update();
