@@ -31,24 +31,25 @@
           const controls = new THREE.OrbitControls(camera, document.body); 
           
           // 平行光源1
-          var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF);
+          var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF, 0.3);
           directionalLight1.position.set(10, 10, 10);
              directionalLight1.castShadow = true; 
           // シーンに追加
           scene.add(directionalLight1);
           // 平行光源2
-          var directionalLight2 = new THREE.DirectionalLight(0x888888);
+         /* var directionalLight2 = new THREE.DirectionalLight(0x888888);
           directionalLight2.position.set(-10, -10, 10);
           directionalLight2.castShadow = true; 
+          */
           // シーンに追加
           scene.add(directionalLight2);
           var light = new THREE.SpotLight(0xffffff, 1, 100, Math.PI / 20, 0.2);
-          light.position.set(0,10, -15);
+          light.position.set(0,0, 0);
           light.castShadow = true;
-            
+           scene.add(light);
           // helper
-          const gridHelper = new THREE.GridHelper(2,10); // size, step
-          scene.add(gridHelper);
+          //const gridHelper = new THREE.GridHelper(2,10); // size, step
+          //scene.add(gridHelper);
           const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
           scene.add(axisHelper);
             
