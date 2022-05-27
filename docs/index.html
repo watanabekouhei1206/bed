@@ -18,7 +18,7 @@
           var renderer = new THREE.WebGLRenderer();
           document.body.appendChild(renderer.domElement);
           renderer.setSize(width, height);
-         
+          renderer.shadowMap.enabled = true;
           // シーンを作成
           const scene = new THREE.Scene();
   
@@ -33,15 +33,18 @@
           // 平行光源1
           var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF);
           directionalLight1.position.set(10, 10, 10);
+             directionalLight1.castShadow = true; 
           // シーンに追加
           scene.add(directionalLight1);
           // 平行光源2
           var directionalLight2 = new THREE.DirectionalLight(0x888888);
           directionalLight2.position.set(-10, -10, 10);
+          directionalLight2.castShadow = true; 
           // シーンに追加
           scene.add(directionalLight2);
-  
-         
+          var light = new THREE.SpotLight(0xffffff, 1, 100, Math.PI / 20, 0.2);
+          light.position.set(0,10, -15);
+          light.castShadow = true;
             
           // helper
           const gridHelper = new THREE.GridHelper(2,10); // size, step
@@ -49,8 +52,13 @@
           const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
           scene.add(axisHelper);
             
-        
-         
+        var planeGeometry = new THREE.PlaneGeometry(10,10);
+         var planeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+        plane.receiveShadow = true; //影がつく
+        plane.rotation.set( -Math.PI/2, 0, 0 );
+        plane.position.set(0,-1.5,-2);
+        scene.add(plane);
          
   
           const geometry1 = new THREE.BoxGeometry( 2, 0.1, 1);
@@ -122,6 +130,7 @@
             bed.add(frame2);
             bed.add(mat);
             bed.add(pillow);
+            bed.castShadow = true;
             bed.position.set(0,0.05,0);
             
             scene.add(bed);
