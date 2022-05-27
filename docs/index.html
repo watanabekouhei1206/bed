@@ -18,7 +18,7 @@
           var renderer = new THREE.WebGLRenderer();
           document.body.appendChild(renderer.domElement);
           renderer.setSize(width, height);
-          renderer.shadowMap.enabled = true;
+         
           // シーンを作成
           const scene = new THREE.Scene();
   
@@ -41,11 +41,7 @@
           // シーンに追加
           scene.add(directionalLight2);
   
-          // 照明を作成
-          const light = new THREE.SpotLight(0xFFFFFF, 2, 30, Math.PI / 4, 1);
-          // ライトに影を有効にする
-          light.castShadow = true;
-          scene.add(light);
+         
             
           // helper
           const gridHelper = new THREE.GridHelper(2,10); // size, step
@@ -53,14 +49,9 @@
           const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
           scene.add(axisHelper);
             
-          // 床を作成
-         const meshFloor = new THREE.Mesh(
-          new THREE.BoxGeometry(2000, 0.1, 2000),
-          new THREE.MeshStandardMaterial());
+        
          
-          // 影を受け付ける
-          meshFloor.receiveShadow = true;
-          scene.add(meshFloor);
+         
   
           const geometry1 = new THREE.BoxGeometry( 2, 0.1, 1);
           const material1 = new THREE.MeshLambertMaterial( {color: 0xC27526} );
@@ -132,7 +123,7 @@
             bed.add(mat);
             bed.add(pillow);
             bed.position.set(0,0.05,0);
-            bed.castShadow = true;
+            
             scene.add(bed);
   
           update();
