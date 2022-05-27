@@ -1,158 +1,166 @@
 <html>
-    <head>
-      <meta charset="utf-8" />
-      <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
-      <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
-    </head>
-  <body>
-   <script>
-        // ページの読み込みを待つ
-        window.addEventListener('DOMContentLoaded', init);
-  
-        function init() {
-          // サイズを指定
-          const width = 800
-          const height = 600;
-  
-          // レンダラーを作成
-          var renderer = new THREE.WebGLRenderer();
-          document.body.appendChild(renderer.domElement);
-          renderer.setSize(width, height);
-          renderer.shadowMap.enabled = true;
-          // シーンを作成
-          const scene = new THREE.Scene();
-  
-          // カメラを作成
-          const camera = new THREE.PerspectiveCamera(45, width / height);
-          // カメラの初期座標を設定
-          camera.position.set(0, 0, 10);
-  
-          // カメラコントローラーを作成
-          const controls = new THREE.OrbitControls(camera, document.body); 
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/three@0.137.4/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.137.4/examples/js/controls/OrbitControls.js"></script>
+  </head>
+<body>
+ <script>
+      // ページの読み込みを待つ
+      window.addEventListener('DOMContentLoaded', init);
+
+      function init() {
+        // サイズを指定
+        const width = 800
+        const height = 600;
+
+        // レンダラーを作成
+        var renderer = new THREE.WebGLRenderer();
+        document.body.appendChild(renderer.domElement);
+        renderer.setSize(width, height);
+        renderer.shadowMap.enabled = true;
+        // シーンを作成
+        const scene = new THREE.Scene();
+
+        // カメラを作成
+        const camera = new THREE.PerspectiveCamera(45, width / height);
+        // カメラの初期座標を設定
+        camera.position.set(0, 0, 10);
+
+        // カメラコントローラーを作成
+        const controls = new THREE.OrbitControls(camera, document.body); 
+        
+        // 平行光源1
+        var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF, 0.3);
+        directionalLight1.position.set(10, 10, 10);
+           directionalLight1.castShadow = true; 
+        // シーンに追加
+        scene.add(directionalLight1);
+        // 平行光源2
+        var directionalLight2 = new THREE.DirectionalLight(0x888888);
+        directionalLight2.position.set(-10, -10, 10);
+        directionalLight2.castShadow = true; 
+        
+        // シーンに追加
+        scene.add(directionalLight2);
+        var light = new THREE.SpotLight(0xffffff, 1, 100, Math.PI / 20, 0.2);
+        light.position.set(0,10, -5);
+        light.castShadow = true;
+         scene.add(light);
+        // helper
+        const gridHelper = new THREE.GridHelper(2,10); // size, step
+        scene.add(gridHelper);
+        const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
+        scene.add(axisHelper);
           
-          // 平行光源1
-          var directionalLight1 = new THREE.DirectionalLight(0xFFFFFF, 0.3);
-          directionalLight1.position.set(10, 10, 10);
-             directionalLight1.castShadow = true; 
-          // シーンに追加
-          scene.add(directionalLight1);
-          // 平行光源2
-          var directionalLight2 = new THREE.DirectionalLight(0x888888);
-          directionalLight2.position.set(-10, -10, 10);
-          directionalLight2.castShadow = true; 
+      var planeGeometry = new THREE.PlaneGeometry(5,5);
+       var planeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+      var plane = new THREE.Mesh(planeGeometry,planeMaterial);
+      plane.receiveShadow = true; //影がつく
+      plane.rotation.set( -Math.PI/2, 0, 0 );
+      plane.position.set(0,0,0);
+      scene.add(plane);
+       
+
+        const geometry1 = new THREE.BoxGeometry( 2, 0.1, 1);
+        const material1 = new THREE.MeshLambertMaterial( {color: 0xC27526} );
+        const cube = new THREE.Mesh( geometry1, material1 );
+        cube.castShadow = true;
+        cube.position.y += 0.25;
+        scene.add( cube );
+        
+        const geometry2 = new THREE.BoxGeometry(0.1, 0.25, 0.09);
+        const leg1 = new THREE.Mesh( geometry2, material1 );
+        leg1.castShadow = true;
+        leg1.position.x += 0.9;
+        leg1.position.y += 0.15;
+        leg1.position.z += 0.4;
+        scene.add( leg1 );
+
+        const geometry3 = new THREE.BoxGeometry(-0.1, 0.25, 0.09);
+        const leg2 = new THREE.Mesh( geometry3, material1 );
+        leg2.castShadow = true;
+        leg2.position.x -= 0.9;
+        leg2.position.y += 0.15;
+        leg2.position.z += 0.4;
+        scene.add( leg2 );
+
+        const geometry4 = new THREE.BoxGeometry(0.1, 0.25, -0.09);
+        const leg3 = new THREE.Mesh( geometry4, material1 );
+        leg3.castShadow = true;
+        leg3.position.x += 0.9;
+        leg3.position.y += 0.15;
+        leg3.position.z -= 0.4;
+        scene.add( leg3 );
+
+        const geometry5 = new THREE.BoxGeometry(-0.1, 0.25, -0.09);
+        const leg4 = new THREE.Mesh( geometry2, material1 );
+        leg4.castShadow = true;
+        leg4.position.x -= 0.9;
+        leg4.position.y += 0.15;
+        leg4.position.z -= 0.4;
+        scene.add( leg4 );
+
+        const geometry6 = new THREE.BoxGeometry(0.05, 0.6, 1);
+        const frame1 = new THREE.Mesh( geometry6, material1 );
+        frame1.castShadow = true;
+        frame1.position.x += 0.95;
+        frame1.position.y += 0.5;
+        scene.add(frame1);
+        
+        const geometry7 = new THREE.BoxGeometry(0.05, 0.4, 1);
+        const frame2 = new THREE.Mesh( geometry7, material1 );
+        frame2.castShadow = true;
+        frame2.position.x -= 0.95;
+        frame2.position.y += 0.4;
+        scene.add( frame2 );
+
+        const geometry8 = new THREE.BoxGeometry( 1.9, 0.3, 0.8);
+        const material2 = new THREE.MeshLambertMaterial( {color: 0x6A3300} );
+        const mat = new THREE.Mesh( geometry8, material2 );
+        mat.castShadow = true;
+        mat.position.y += 0.325;
+        scene.add( mat);
+
+        const geometry9 = new THREE.BoxGeometry( 0.2, 0.2, 0.4);
+        const material3 = new THREE.MeshLambertMaterial( {color: 0xFFFFFF} );
+        const pillow = new THREE.Mesh( geometry9, material3 );
+        pillow.castShadow = true;
+        pillow.position.x += 0.75;
+        pillow.position.y += 0.475;
+        scene.add(pillow)
+
+        const bed = new THREE.Group();
+          bed.add(cube);
+          bed.add(leg1);
+          bed.add(leg2);
+          bed.add(leg3);
+          bed.add(leg4);
+          bed.add(frame1);
+          bed.add(frame2);
+          bed.add(mat);
+          bed.add(pillow);
+          bed.castShadow = true;
+          bed.position.set(0,0.05,0);
           
-          // シーンに追加
-          scene.add(directionalLight2);
-          var light = new THREE.SpotLight(0xffffff, 1, 100, Math.PI / 20, 0.2);
-          light.position.set(0,0, 0);
-          light.castShadow = true;
-           scene.add(light);
-          // helper
-          const gridHelper = new THREE.GridHelper(2,10); // size, step
-          scene.add(gridHelper);
-          const axisHelper = new THREE.AxisHelper(5); //軸の長さ　X：赤、Y：緑、z：青
-          scene.add(axisHelper);
-            
-        var planeGeometry = new THREE.PlaneGeometry(5,5);
-         var planeMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-        var plane = new THREE.Mesh(planeGeometry,planeMaterial);
-        plane.receiveShadow = true; //影がつく
-        plane.rotation.set( -Math.PI/2, 0, 0 );
-        plane.position.set(0,0,0);
-        scene.add(plane);
+          scene.add(bed);
+
+        update();
+
+        // 毎フレーム時に実行されるループイベントです
+        function update() {
+          // レンダリング
+          renderer.render(scene, camera);
+          requestAnimationFrame(update);
+
          
-  
-          const geometry1 = new THREE.BoxGeometry( 2, 0.1, 1);
-          const material1 = new THREE.MeshLambertMaterial( {color: 0xC27526} );
-          const cube = new THREE.Mesh( geometry1, material1 );
-          cube.position.y += 0.25;
-          scene.add( cube );
+          // ペンギンを回転させる
+          bed.rotation.y += 0.005;;
           
-          const geometry2 = new THREE.BoxGeometry(0.1, 0.25, 0.09);
-          const leg1 = new THREE.Mesh( geometry2, material1 );
-          leg1.position.x += 0.9;
-          leg1.position.y += 0.15;
-          leg1.position.z += 0.4;
-          scene.add( leg1 );
-  
-          const geometry3 = new THREE.BoxGeometry(-0.1, 0.25, 0.09);
-          const leg2 = new THREE.Mesh( geometry3, material1 );
-          leg2.position.x -= 0.9;
-          leg2.position.y += 0.15;
-          leg2.position.z += 0.4;
-          scene.add( leg2 );
-  
-          const geometry4 = new THREE.BoxGeometry(0.1, 0.25, -0.09);
-          const leg3 = new THREE.Mesh( geometry4, material1 );
-          leg3.position.x += 0.9;
-          leg3.position.y += 0.15;
-          leg3.position.z -= 0.4;
-          scene.add( leg3 );
-  
-          const geometry5 = new THREE.BoxGeometry(-0.1, 0.25, -0.09);
-          const leg4 = new THREE.Mesh( geometry2, material1 );
-          leg4.position.x -= 0.9;
-          leg4.position.y += 0.15;
-          leg4.position.z -= 0.4;
-          scene.add( leg4 );
-  
-          const geometry6 = new THREE.BoxGeometry(0.05, 0.6, 1);
-          const frame1 = new THREE.Mesh( geometry6, material1 );
-          frame1.position.x += 0.95;
-          frame1.position.y += 0.5;
-          scene.add(frame1);
-          
-          const geometry7 = new THREE.BoxGeometry(0.05, 0.4, 1);
-          const frame2 = new THREE.Mesh( geometry7, material1 );
-          frame2.position.x -= 0.95;
-          frame2.position.y += 0.4;
-          scene.add( frame2 );
-  
-          const geometry8 = new THREE.BoxGeometry( 1.9, 0.3, 0.8);
-          const material2 = new THREE.MeshLambertMaterial( {color: 0x6A3300} );
-          const mat = new THREE.Mesh( geometry8, material2 );
-          mat.position.y += 0.325;
-          scene.add( mat);
-
-          const geometry9 = new THREE.BoxGeometry( 0.2, 0.2, 0.4);
-          const material3 = new THREE.MeshLambertMaterial( {color: 0xFFFFFF} );
-          const pillow = new THREE.Mesh( geometry9, material3 );
-          pillow.position.x += 0.75;
-          pillow.position.y += 0.475;
-          scene.add(pillow)
-  
-          const bed = new THREE.Group();
-            bed.add(cube);
-            bed.add(leg1);
-            bed.add(leg2);
-            bed.add(leg3);
-            bed.add(leg4);
-            bed.add(frame1);
-            bed.add(frame2);
-            bed.add(mat);
-            bed.add(pillow);
-            bed.castShadow = true;
-            bed.position.set(0,0.05,0);
-            
-            scene.add(bed);
-  
-          update();
-  
-          // 毎フレーム時に実行されるループイベントです
-          function update() {
-            // レンダリング
-            renderer.render(scene, camera);
-            requestAnimationFrame(update);
-  
-           
-            // ペンギンを回転させる
-            bed.rotation.y += 0.005;;
-            
-            // 全体を回転させる
-            //all.rotation.x += 0.01;
-            //all.rotation.y += 0.005;;
-          }
+          // 全体を回転させる
+          //all.rotation.x += 0.01;
+          //all.rotation.y += 0.005;;
         }
-      </script>
-  </body>
-
+      }
+    </script>
+</body>
